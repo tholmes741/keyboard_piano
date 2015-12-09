@@ -6,6 +6,13 @@ var KeyActions = {
       actionType: "ADD_KEY",
       key: key
     });
+  },
+
+  keyUp: function(key){
+    AppDispatcher.dispatch({
+      actionType: "REMOVE_KEY",
+      key: key
+    });
   }
 };
 

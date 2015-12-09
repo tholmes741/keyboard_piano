@@ -5,18 +5,33 @@ var _keysPressed = [];
 
 var KeyStore = new Store(AppDispatcher);
 
-KeyStore._onDispatch = function(payload) {
+KeyStore.__onDispatch = function(payload) {
   switch (payload.actionType) {
     case "ADD_KEY":
-      console.log("keyPressed!! ", payload.key);
       addKey(payload.key);
+      break;
+    case "REMOVE_KEY":
+      removeKey(payload.key);
       break;
   }
 };
 
 var addKey = function(key) {
-  _keysPressed.push(key);
-  KeyStore._emitChange();
+  var idx = _keysPressed.indexOf(key);
+  if(idx === -1){
+    _keysPressed.push(key);
+    KeyStore.__emitChange();
+  }
+};
+
+var removeKey = function(key){
+  var idx = _keysPressed.indexOf(key);
+  _keysPressed.splice(idx, 1);
+  KeyStore.__emitChange();
+};
+
+KeyStore.all = function() {
+  return _keysPressed.slice();
 };
 
 module.exports = KeyStore;
