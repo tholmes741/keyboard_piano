@@ -2,6 +2,7 @@ var React = require("react");
 var AppDispatcher = require('../dispatcher/Dispatcher.js');
 var KeyStore = require('../stores/KeyStore.js');
 var Key = require('./Key.jsx');
+var Recorder = require('./Recorder.jsx');
 
 
 var Organ = React.createClass({
@@ -27,6 +28,7 @@ var Organ = React.createClass({
     });
     return (
       <div>
+        <Recorder notes={this.state.keys}/>
         {keys}
       </div>
     );

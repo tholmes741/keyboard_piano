@@ -13,6 +13,13 @@ var KeyActions = {
       actionType: "REMOVE_KEY",
       key: key
     });
+  },
+
+  playNotes: function(keys) {
+    AppDispatcher.dispatch({
+      actionType: "PLAY_NOTES",
+      keys: keys
+    });
   }
 };
 

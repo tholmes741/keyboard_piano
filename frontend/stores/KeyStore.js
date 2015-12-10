@@ -13,6 +13,12 @@ KeyStore.__onDispatch = function(payload) {
     case "REMOVE_KEY":
       removeKey(payload.key);
       break;
+    case "PLAY_NOTES":
+      removeAll();
+      payload.keys.forEach(function(key){
+        addKey(key);
+      });
+    break;
   }
 };
 
@@ -27,6 +33,11 @@ var addKey = function(key) {
 var removeKey = function(key){
   var idx = _keysPressed.indexOf(key);
   _keysPressed.splice(idx, 1);
+  KeyStore.__emitChange();
+};
+
+var removeAll = function(){
+  _keysPressed = [];
   KeyStore.__emitChange();
 };
 
