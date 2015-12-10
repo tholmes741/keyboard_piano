@@ -1,8 +1,7 @@
 var React = require("react");
 var Track = require('../util/Track.js');
-var KeyStore = require('../stores/KeyStore.js');
-
-
+TrackStore = require('../stores/TrackStore.js');
+var TrackActions = require('../actions/TrackActions.js');
 
 var Recorder = React.createClass({
   getInitialState: function(){
@@ -15,8 +14,13 @@ var Recorder = React.createClass({
   toggleRecording: function(){
     if(this.state.isRecording){
       this.state.track.stopRecording();
+      console.log(this.state.track, "done track");
+
+      // TrackActions.addTrack(this.state.track);
     }else{
-      this.state.track.startRecording();      
+      // this.setState( {track: new Track({name: "Untitled"})} );
+      console.log(this.state.track, "track");
+      this.state.track.startRecording();
     }
     this.setState({ isRecording: !this.state.isRecording });
   },

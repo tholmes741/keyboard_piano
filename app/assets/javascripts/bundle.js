@@ -26587,7 +26587,8 @@
 
 	var React = __webpack_require__(26);
 	var Track = __webpack_require__(188);
-	var KeyStore = __webpack_require__(8);
+	TrackStore = __webpack_require__(189);
+	var TrackActions = __webpack_require__(190);
 	
 	var Recorder = React.createClass({
 	  displayName: 'Recorder',
@@ -26602,9 +26603,14 @@
 	  toggleRecording: function () {
 	    if (this.state.isRecording) {
 	      this.state.track.stopRecording();
+	      console.log(this.state.track, "done track");
+	
+	      // TrackActions.addTrack(this.state.track);
 	    } else {
-	      this.state.track.startRecording();
-	    }
+	        // this.setState( {track: new Track({name: "Untitled"})} );
+	        console.log(this.state.track, "track");
+	        this.state.track.startRecording();
+	      }
 	    this.setState({ isRecording: !this.state.isRecording });
 	  },
 	
@@ -26687,6 +26693,53 @@
 	};
 	
 	module.exports = Track;
+
+/***/ },
+/* 189 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(3);
+	var Store = __webpack_require__(9).Store;
+	
+	var _tracks = [];
+	
+	var TrackStore = new Store(AppDispatcher);
+	
+	TrackStore.__onDispatch = function (payload) {
+	  switch (payload.actionType) {
+	    case "ADD_TRACK":
+	      addTrack(payload.track);
+	      break;
+	  }
+	};
+	
+	TrackStore.all = function () {
+	  return _tracks.slice();
+	};
+	
+	var addTrack = function (track) {
+	  _tracks.push(track);
+	  TrackStore.__emitChange();
+	};
+	
+	module.exports = TrackStore;
+
+/***/ },
+/* 190 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var AppDispatcher = __webpack_require__(3);
+	
+	var TrackActions = {
+	  addTrack: function (track) {
+	    AppDispatcher.dispatch({
+	      actionType: "ADD_TRACK",
+	      track: track
+	    });
+	  }
+	};
+	
+	module.exports = TrackActions;
 
 /***/ }
 /******/ ]);
